@@ -1,0 +1,134 @@
+# ------------------------------------------------------
+# STUDENT REPORT CARD SYSTEM (Clean + Beginner-Friendly)
+# ------------------------------------------------------
+
+students = []   # stores all student records
+
+
+# ------------------ FUNCTION: Add Student ------------------
+def add_student():
+    print("\n--- Add Student Marks ---")
+    name = input("Enter Student Name: ")
+
+    math = int(input("Math Marks: "))
+    science = int(input("Science Marks: "))
+    english = int(input("English Marks: "))
+
+    student = {
+        "name": name,
+        "math": math,
+        "science": science,
+        "english": english
+    }
+
+    students.append(student)
+    print("✔ Student added successfully!\n")
+
+
+# ------------------ FUNCTION: Generate Report for One Student ------------------
+def generate_report():
+    print("\n--- Generate Report Card ---")
+    name = input("Enter Student Name: ")
+
+    for s in students:
+        if s["name"].lower() == name.lower():
+
+            total = s["math"] + s["science"] + s["english"]
+            percentage = round(total / 3, 2)
+
+            # pass/fail
+            if s["math"] >= 40 and s["science"] >= 40 and s["english"] >= 40:
+                status = "PASS"
+            else:
+                status = "FAIL"
+
+            print("\n====== REPORT CARD ======")
+            print("Name       :", s["name"])
+            print("Math       :", s["math"])
+            print("Science    :", s["science"])
+            print("English    :", s["english"])
+            print("--------------------------")
+            print("Total      :", total)
+            print("Percentage :", percentage)
+            print("Result     :", status)
+            print("==========================\n")
+            return
+
+    print("❌ Student not found!\n")
+
+
+# ------------------ FUNCTION: Class Analysis ------------------
+def class_analysis():
+    if not students:
+        print("\n❌ No student data available!\n")
+        return
+
+    print("\n--- Class Performance Analysis ---")
+
+    # Class average
+    percentages = []
+    for s in students:
+        total = s["math"] + s["science"] + s["english"]
+        percentages.append(total / 3)
+
+    class_avg = round(sum(percentages) / len(percentages), 2)
+
+    # Topper
+    topper = None
+    highest_percentage = -1
+
+    for s in students:
+        total = s["math"] + s["science"] + s["english"]
+        percentage = total / 3
+
+        if percentage > highest_percentage:
+            highest_percentage = percentage
+            topper = s["name"]
+
+    print(f"📊 Class Average Percentage : {class_avg}%")
+    print(f"🏆 Topper of Class          : {topper} ({round(highest_percentage,2)}%)\n")
+
+
+# ------------------ FUNCTION: Show All Students ------------------
+def show_all_students():
+    if not students:
+        print("\n❌ No student data available!\n")
+        return
+
+    print("\n--- All Student Records ---")
+    for s in students:
+        print(f"• {s['name']} → Math:{s['math']} Sci:{s['science']} Eng:{s['english']}")
+    print()
+
+
+# ------------------ MAIN MENU ------------------
+def menu():
+    while True:
+        print("\n==============================")
+        print("     STUDENT REPORT SYSTEM")
+        print("==============================")
+        print("1. Add Student")
+        print("2. Generate Student Report")
+        print("3. Class Analysis")
+        print("4. Show All Students")
+        print("5. Exit")
+
+        choice = input("Select option (1-5): ")
+
+        if choice == "1":
+            add_student()
+        elif choice == "2":
+            generate_report()
+        elif choice == "3":
+            class_analysis()
+        elif choice == "4":
+            show_all_students()
+        elif choice == "5":
+            print("\n👋 Exiting program. Goodbye!")
+            break
+        else:
+            print("❌ Invalid choice! Try again.\n")
+
+
+# Run Program
+menu()
