@@ -8,12 +8,9 @@ A **comprehensive Student Report Card System** built in Python to efficiently ma
 - [About](#about)  
 - [Features](#features)  
 - [Technologies](#technologies)  
-- [Project Structure](#project-structure)  
-- [Installation](#installation)  
-- [How to Run](#how-to-run)  
 - [Example Output](#example-output)  
 - [Contributing](#contributing)  
-- [License](#license)  
+   
 
 ---
 
@@ -53,4 +50,38 @@ The Student Report Card System is a command-line interface (CLI) application des
 7. Exit
 Enter your choice:
 
+##Adding a Student:
+Enter Student ID: 101
+Enter Student Name: Alice
+Enter marks for Math: 95
+Enter marks for Science: 88
+Enter marks for English: 92
+Student Alice added successfully!
+
+##VIEWING REPORT CARD
+--- Report Card: Alice ---
+Math: 95  Grade: A+
+Science: 88  Grade: A
+English: 92  Grade: A+
+Total Marks: 275
+Average Marks: 91.67
+Overall Grade: A+
+Result: Pass
+
+##UPDATING STUDENT MARKS
+Enter Student ID: 101
+Enter new marks for Math (current: 95): 98
+Enter new marks for Science (current: 88): 90
+Enter new marks for English (current: 92): 94
+Marks updated successfully!
+
+
+##TOPPER DETECTION
+Topper: Alice with Average Marks: 91.67
+
+##HIGHEST SCORE PER SUBJECT
+--- Highest Scores ---
+Math: 95 by Alice
+Science: 88 by Alice
+English: 92 by Alice
 
