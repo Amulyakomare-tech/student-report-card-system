@@ -1,134 +1,166 @@
 # ------------------------------------------------------
 # STUDENT REPORT CARD SYSTEM (Clean + Beginner-Friendly)
 # ------------------------------------------------------
+# Enhanced Student Report Card System
+# Features: Add student, update marks, view report, pass/fail analysis, topper detection, highest score per subject
 
-students = []   # stores all student records
+import json
+import os
 
+DATA_FILE = "students.json"
 
-# ------------------ FUNCTION: Add Student ------------------
-def add_student():
-    print("\n--- Add Student Marks ---")
-    name = input("Enter Student Name: ")
+# Load data
+def load_data():
+    if os.path.exists(DATA_FILE):
+        with open(DATA_FILE, "r") as file:
+            return json.load(file)
+    return {}
 
-    math = int(input("Math Marks: "))
-    science = int(input("Science Marks: "))
-    english = int(input("English Marks: "))
+# Save data
+def save_data(data):
+    with open(DATA_FILE, "w") as file:
+        json.dump(data, file, indent=4)
 
-    student = {
-        "name": name,
-        "math": math,
-        "science": science,
-        "english": english
-    }
+# Calculate grade
+def calculate_grade(marks):
+    if marks >= 90:
+        return "A+"
+    elif marks >= 80:
+        return "A"
+    elif marks >= 70:
+        return "B+"
+    elif marks >= 60:
+        return "B"
+    elif marks >= 50:
+        return "C"
+    else:
+        return "F"
 
-    students.append(student)
-    print("✔ Student added successfully!\n")
-
-
-# ------------------ FUNCTION: Generate Report for One Student ------------------
-def generate_report():
-    print("\n--- Generate Report Card ---")
-    name = input("Enter Student Name: ")
-
-    for s in students:
-        if s["name"].lower() == name.lower():
-
-            total = s["math"] + s["science"] + s["english"]
-            percentage = round(total / 3, 2)
-
-            # pass/fail
-            if s["math"] >= 40 and s["science"] >= 40 and s["english"] >= 40:
-                status = "PASS"
-            else:
-                status = "FAIL"
-
-            print("\n====== REPORT CARD ======")
-            print("Name       :", s["name"])
-            print("Math       :", s["math"])
-            print("Science    :", s["science"])
-            print("English    :", s["english"])
-            print("--------------------------")
-            print("Total      :", total)
-            print("Percentage :", percentage)
-            print("Result     :", status)
-            print("==========================\n")
-            return
-
-    print("❌ Student not found!\n")
-
-
-# ------------------ FUNCTION: Class Analysis ------------------
-def class_analysis():
-    if not students:
-        print("\n❌ No student data available!\n")
+# Add student
+def add_student(data):
+    student_id = input("Enter Student ID: ")
+    if student_id in data:
+        print("Student already exists!\n")
         return
+    name = input("Enter Student Name: ")
+    subjects = ["Math", "Science", "English"]
+    marks = {}
+    for subject in subjects:
+        marks[subject] = int(input(f"Enter marks for {subject}: "))
+    data[student_id] = {"name": name, "marks": marks}
+    save_data(data)
+    print(f"Student {name} added successfully!\n")
 
-    print("\n--- Class Performance Analysis ---")
-
-    # Class average
-    percentages = []
-    for s in students:
-        total = s["math"] + s["science"] + s["english"]
-        percentages.append(total / 3)
-
-    class_avg = round(sum(percentages) / len(percentages), 2)
-
-    # Topper
-    topper = None
-    highest_percentage = -1
-
-    for s in students:
-        total = s["math"] + s["science"] + s["english"]
-        percentage = total / 3
-
-        if percentage > highest_percentage:
-            highest_percentage = percentage
-            topper = s["name"]
-
-    print(f"📊 Class Average Percentage : {class_avg}%")
-    print(f"🏆 Topper of Class          : {topper} ({round(highest_percentage,2)}%)\n")
-
-
-# ------------------ FUNCTION: Show All Students ------------------
-def show_all_students():
-    if not students:
-        print("\n❌ No student data available!\n")
+# View report card
+def view_student(data):
+    student_id = input("Enter Student ID: ")
+    if student_id not in data:
+        print("Student not found!\n")
         return
+    student = data[student_id]
+    print(f"\n--- Report Card: {student['name']} ---")
+    total_marks = 0
+    pass_fail = "Pass"
+    for subject, mark in student["marks"].items():
+        grade = calculate_grade(mark)
+        print(f"{subject}: {mark}  Grade: {grade}")
+        total_marks += mark
+        if mark < 35:  # assuming 35 is passing marks
+            pass_fail = "Fail"
+    average = total_marks / len(student["marks"])
+    print(f"Total Marks: {total_marks}")
+    print(f"Average Marks: {average:.2f}")
+    print(f"Overall Grade: {calculate_grade(average)}")
+    print(f"Result: {pass_fail}\n")
 
-    print("\n--- All Student Records ---")
-    for s in students:
-        print(f"• {s['name']} → Math:{s['math']} Sci:{s['science']} Eng:{s['english']}")
+# Update marks
+def update_student(data):
+    student_id = input("Enter Student ID: ")
+    if student_id not in data:
+        print("Student not found!\n")
+        return
+    student = data[student_id]
+    print(f"Updating marks for {student['name']}")
+    for subject in student["marks"]:
+        new_mark = int(input(f"Enter new marks for {subject} (current: {student['marks'][subject]}): "))
+        student["marks"][subject] = new_mark
+    save_data(data)
+    print(f"Marks updated successfully!\n")
+
+# List all students
+def list_students(data):
+    if not data:
+        print("No students found!\n")
+        return
+    print("\n--- All Students ---")
+    for student_id, student in data.items():
+        print(f"ID: {student_id}  Name: {student['name']}")
     print()
 
+# Topper detection
+def show_topper(data):
+    if not data:
+        print("No students found!\n")
+        return
+    topper = None
+    highest_avg = -1
+    for student in data.values():
+        total = sum(student["marks"].values())
+        avg = total / len(student["marks"])
+        if avg > highest_avg:
+            highest_avg = avg
+            topper = student
+    print(f"\nTopper: {topper['name']} with Average Marks: {highest_avg:.2f}\n")
 
-# ------------------ MAIN MENU ------------------
-def menu():
+# Highest score per subject
+def highest_scores(data):
+    if not data:
+        print("No students found!\n")
+        return
+    subjects = ["Math", "Science", "English"]
+    print("\n--- Highest Scores ---")
+    for subject in subjects:
+        highest = -1
+        top_student = ""
+        for student in data.values():
+            if student["marks"][subject] > highest:
+                highest = student["marks"][subject]
+                top_student = student["name"]
+        print(f"{subject}: {highest} by {top_student}")
+    print()
+
+# Main menu
+def main():
+    data = load_data()
     while True:
-        print("\n==============================")
-        print("     STUDENT REPORT SYSTEM")
-        print("==============================")
+        print("=== Student Report Card System ===")
         print("1. Add Student")
-        print("2. Generate Student Report")
-        print("3. Class Analysis")
-        print("4. Show All Students")
-        print("5. Exit")
-
-        choice = input("Select option (1-5): ")
+        print("2. View Student Report Card")
+        print("3. Update Student Marks")
+        print("4. List All Students")
+        print("5. Show Topper")
+        print("6. Show Highest Score per Subject")
+        print("7. Exit")
+        choice = input("Enter your choice: ")
 
         if choice == "1":
-            add_student()
+            add_student(data)
         elif choice == "2":
-            generate_report()
+            view_student(data)
         elif choice == "3":
-            class_analysis()
+            update_student(data)
         elif choice == "4":
-            show_all_students()
+            list_students(data)
         elif choice == "5":
-            print("\n👋 Exiting program. Goodbye!")
+            show_topper(data)
+        elif choice == "6":
+            highest_scores(data)
+        elif choice == "7":
+            print("Exiting...")
             break
         else:
-            print("❌ Invalid choice! Try again.\n")
+            print("Invalid choice! Try again.\n")
 
+if __name__ == "__main__":
+    main()
 
-# Run Program
-menu()
