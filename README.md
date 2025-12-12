@@ -51,6 +51,7 @@ The Student Report Card System is a command-line interface (CLI) application des
 Enter your choice:
 
 ##Adding a Student:
+
 Enter Student ID: 101
 Enter Student Name: Alice
 Enter marks for Math: 95
@@ -59,6 +60,7 @@ Enter marks for English: 92
 Student Alice added successfully!
 
 ##VIEWING REPORT CARD
+
 --- Report Card: Alice ---
 Math: 95  Grade: A+
 Science: 88  Grade: A
@@ -69,6 +71,7 @@ Overall Grade: A+
 Result: Pass
 
 ##UPDATING STUDENT MARKS
+
 Enter Student ID: 101
 Enter new marks for Math (current: 95): 98
 Enter new marks for Science (current: 88): 90
@@ -77,9 +80,11 @@ Marks updated successfully!
 
 
 ##TOPPER DETECTION
+
 Topper: Alice with Average Marks: 91.67
 
 ##HIGHEST SCORE PER SUBJECT
+
 --- Highest Scores ---
 Math: 95 by Alice
 Science: 88 by Alice
