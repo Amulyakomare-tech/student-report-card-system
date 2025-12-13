@@ -103,7 +103,9 @@ Topper: Alice with Average Marks: 91.67
 --- Highest Scores ---
 
 Math: 95 by Alice
+
 Science: 88 by Alice
+
 English: 92 by Alice
 
 
