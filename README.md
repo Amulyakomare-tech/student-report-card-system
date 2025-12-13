@@ -62,12 +62,17 @@ Student Alice added successfully!
 ##VIEWING REPORT CARD
 
 --- Report Card: Alice ---
-Math: 95  Grade: A+
+Math: 95  Grade: A+ 
+
 Science: 88  Grade: A
+
 English: 92  Grade: A+
 Total Marks: 275
+
 Average Marks: 91.67
+
 Overall Grade: A+
+
 Result: Pass
 
 ##UPDATING STUDENT MARKS
