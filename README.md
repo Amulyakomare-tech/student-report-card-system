@@ -53,10 +53,15 @@ Enter your choice:
 ##Adding a Student:
 
 Enter Student ID: 101
+
 Enter Student Name: Alice
+
 Enter marks for Math: 95
+
 Enter marks for Science: 88
+
 Enter marks for English: 92
+
 Student Alice added successfully!
 
 ##VIEWING REPORT CARD
@@ -78,9 +83,13 @@ Result: Pass
 ##UPDATING STUDENT MARKS
 
 Enter Student ID: 101
+
 Enter new marks for Math (current: 95): 98
+
 Enter new marks for Science (current: 88): 90
+
 Enter new marks for English (current: 92): 94
+
 Marks updated successfully!
 
 
@@ -88,10 +97,15 @@ Marks updated successfully!
 
 Topper: Alice with Average Marks: 91.67
 
+
 ##HIGHEST SCORE PER SUBJECT
 
 --- Highest Scores ---
+
 Math: 95 by Alice
+
 Science: 88 by Alice
+
 English: 92 by Alice
+
 
