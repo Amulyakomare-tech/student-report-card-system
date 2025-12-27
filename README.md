@@ -101,7 +101,6 @@ Result: Pass
 ## 👤 Author
 **Amulya Komare**  
 GitHub: [https://github.com/Amulyakomare-tech](https://github.com/Amulyakomare-tech)  
-LinkedIn: [https://www.linkedin.com/in/amulya-komare](https://www.linkedin.com/in/amulya-komare)
 
 
 
